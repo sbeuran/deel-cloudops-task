@@ -1,3 +1,4 @@
+data "aws_availability_zones" "available" {}
 resource "aws_vpc" "primary_task_vpc" {
   cidr_block = "10.0.0.0/21"
   tags = {
@@ -5,12 +6,21 @@ resource "aws_vpc" "primary_task_vpc" {
   }
 }
 
-resource "aws_subnet" "primary_task_vpc_subnet" {
+resource "aws_subnet" "primary_task_vpc_subnet1" {
   vpc_id     = aws_vpc.primary_task_vpc.id
   cidr_block = "10.0.1.0/24"
-  
+  availability_zone = data.aws_availability_zones.available.names[0]
   tags = {
-    Name = "primary-task-vpc-subnet"
+    Name = "primary-task-vpc-subnet1"
+  }
+}
+
+resource "aws_subnet" "primary_task_vpc_subnet2" {
+  vpc_id     = aws_vpc.primary_task_vpc.id
+  cidr_block = "10.0.5.0/24"
+  availability_zone = data.aws_availability_zones.available.names[1]
+  tags = {
+    Name = "primary-task-vpc-subnet2"
   }
 }
 
@@ -30,8 +40,13 @@ resource "aws_route_table" "primary_task_vpc_rt" {
   }
 }
 
-resource "aws_route_table_association" "primary_task_vpc_rt_association" {
-  subnet_id = aws_subnet.primary_task_vpc_subnet.id
+resource "aws_route_table_association" "primary_task_vpc_rt_association1" {
+  subnet_id = aws_subnet.primary_task_vpc_subnet1.id
+  route_table_id = aws_route_table.primary_task_vpc_rt.id
+}
+
+resource "aws_route_table_association" "primary_task_vpc_rt_association2" {
+  subnet_id = aws_subnet.primary_task_vpc_subnet2.id
   route_table_id = aws_route_table.primary_task_vpc_rt.id
 }
 
