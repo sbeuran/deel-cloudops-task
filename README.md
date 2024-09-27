@@ -4,13 +4,16 @@
 ```bash
 cd terraform
 ```
-
-2. Update the `tfvars/default.tfvars` as necessary
-3. Provision the infrastructure:
+2. Install modules and dependencies:
+```bash
+terraform init
+```
+3. Update the `tfvars/default.tfvars` as necessary
+4. Provision the infrastructure:
 ```bash
 terraform apply -var-file="tfvars/default.tfvars" --auto-approve
 ```
-4. To destroy it:
+5. To destroy it:
 ```bash
 terraform destroy -var-file="tfvars/default.tfvars" --auto-approve
 ```
@@ -28,3 +31,7 @@ docker build -t sbeuran/custom-simple-http-server .
 ```bash
 docker push sbeuran/custom-simple-http-server
 ```
+
+# Considerations
+
+1. The task 2. Advanced Networking Configuration states that the custom http server needs to be behind NAT in private network, so I'd like to better understand the purpose of this service, since it still possible to use it in private VPC-only flows, it could've been a mistake in the task.
