@@ -1,12 +1,12 @@
-### To provision infrastructure
+### To provision the infrastructure
 
 1. Navigate to the terraform directory:
 ```bash
 cd terraform
 ```
 
-2. Update `tfvars/default.tfvars` as necessary
-3. Provision infrastructure:
+2. Update the `tfvars/default.tfvars` as necessary
+3. Provision the infrastructure:
 ```bash
 terraform apply -var-file="tfvars/default.tfvars" --auto-approve
 ```
@@ -15,12 +15,11 @@ terraform apply -var-file="tfvars/default.tfvars" --auto-approve
 terraform destroy -var-file="tfvars/default.tfvars" --auto-approve
 ```
 
-
-### How the custom image was built for secondary task
+### How the custom image was built for the secondary task
 
 1. The code dir is `custom-http-server`
 2. The server's code is in `main.py`
-3. `Dockerfile` contains the docker image config
+3. The `Dockerfile` contains the docker image config
 4. To build the image:
 ```bash
 docker build -t sbeuran/custom-simple-http-server .

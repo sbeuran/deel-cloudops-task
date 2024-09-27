@@ -16,8 +16,19 @@ resource "aws_instance" "ec2_instance" {
     sudo amazon-linux-extras install docker -y
     sudo service docker start
     sudo usermod -a -G docker ec2-user
-    docker run -d -p 80:80 yeasy/simple-web:latest
+    docker run -d --name web -p 80:80 yeasy/simple-web:latest
   EOF
+
+  key_name = aws_key_pair.primary_task_keypair.key_name
+
+  provisioner "remote-exec" {
+    script = "scripts/wait_for_yeasy_web.sh"
+    connection {
+      host = self.public_ip
+      user = "ec2-user"
+      private_key = tls_private_key.primary_task_private_key.private_key_pem
+    }
+  }
 
   tags = {
     Name = "primary-task-ec2"
