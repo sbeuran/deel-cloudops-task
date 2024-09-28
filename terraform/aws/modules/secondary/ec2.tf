@@ -6,7 +6,7 @@ resource "aws_instance" "ec2_instance" {
   
   associate_public_ip_address = true
   vpc_security_group_ids = [ aws_security_group.allow_http_https.id ]
-  subnet_id = aws_subnet.secondary_task_vpc_private_subnet_1.id
+  subnet_id = aws_subnet.secondary_task_vpc_subnet.id
 
   user_data = <<-EOF
     #!/bin/bash
