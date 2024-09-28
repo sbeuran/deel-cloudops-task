@@ -6,7 +6,7 @@ resource "aws_instance" "ec2_instance" {
   
   associate_public_ip_address = true
   vpc_security_group_ids = [ aws_security_group.allow_http_https.id ]
-  subnet_id = aws_subnet.secondary_task_vpc_subnet.id
+  subnet_id = aws_subnet.secondary_task_vpc_private_subnet_1.id
 
   user_data = <<-EOF
     #!/bin/bash
@@ -15,7 +15,7 @@ resource "aws_instance" "ec2_instance" {
     sudo amazon-linux-extras install docker -y
     sudo service docker start
     sudo usermod -a -G docker ec2-user
-    docker run -d --name web -p 8080:8080 sbeuran/custom-simple-http-server:latest
+    docker run -d --name web -p 8080:8080 -e DB_NAME=${var.secondary_task_db_name} -e DB_HOST=${aws_db_instance.secondary_task_db.address} -e DB_USER=${var.secondary_task_db_user} -e DB_PASS=${var.secondary_task_db_password} sbeuran/custom-simple-http-server:latest
   EOF
 
   key_name = aws_key_pair.secondary_task_keypair.key_name

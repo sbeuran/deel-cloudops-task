@@ -32,6 +32,10 @@ docker build -t sbeuran/custom-simple-http-server .
 docker push sbeuran/custom-simple-http-server
 ```
 
+# 
+
 # Considerations
 
-1. The task 2. Advanced Networking Configuration states that the custom http server needs to be behind NAT in private network, so I'd like to better understand the purpose of this service, since it still possible to use it in private VPC-only flows, it could've been a mistake in the task.
+1. The task 2. Advanced Networking Configuration states that the custom http server needs to be behind NAT in private network, so I'd like to better understand the purpose of this service, eventhough it's still possible to use it in private VPC-only flows, it could've been a mistake in the task, since there are no more servers running in this net to test it from.
+Adding it is not a problem, the purpose of it for this specific task is blurry.
+2. There is still plenty of room for code optimization, like: many things still can be moved to variables, and structure itself can be improved, which would require more time now. But with enough time spent it could've been done right away.
